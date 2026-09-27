@@ -19,7 +19,7 @@ data = pd.read_csv('https://cf-courses-data.s3.us.cloud-object-storage.appdomain
 app = dash.Dash(__name__)
 
 # Set the title of the dashboard
-#app.title = "Automobile Statistics Dashboard"
+app.title = "Automobile Statistics Dashboard"
 
 #---------------------------------------------------------------------------------
 # Create the dropdown menu options
@@ -66,10 +66,10 @@ app.layout = html.Div([
     Input(component_id='dropdown-statistics',component_property='value'))
 
 def update_input_container(selected_statistics):
-    if selected_statistics =='Yearly Statistics': 
-        return True
-    else: 
+    if selected_statistics == 'Yearly Statistics':
         return False
+    else:
+        return True
 
 #Callback for plotting
 # Define the callback function to update the input container based on the selected statistics
@@ -130,8 +130,8 @@ def update_output_container(selected_statistics, input_year):
             ]
 
 # TASK 2.6: Create and display graphs for Yearly Report Statistics
- # Yearly Statistic Report Plots                             
-    elif (input_year and selected_statistics=='Yearly Statistics') :
+    # Yearly Statistic Report Plots
+    elif input_year and selected_statistics == 'Yearly Statistics':
         yearly_data = data[data['Year'] == input_year]
                               
 #TASK 2.5: Creating Graphs Yearly data
@@ -150,13 +150,13 @@ def update_output_container(selected_statistics, input_year):
                         y='Automobile_Sales',
                         title="Total Monthly Automobile Sales for the Year {}".format(input_year)))
 
-            # Plot bar chart for average number of vehicles sold during the given year
+        # Plot bar chart for average number of vehicles sold during the given year
         avr_vdata=yearly_data.groupby('Vehicle_Type')['Automobile_Sales'].mean().reset_index()
         Y_chart3 = dcc.Graph( figure=px.bar(avr_vdata, 
                         x='Vehicle_Type', 
                         y='Automobile_Sales',title='Average Vehicles Sold by Vehicle Type in the year {}'.format(input_year)))
 
-            # Total Advertisement Expenditure for each vehicle using pie chart
+        # Total Advertisement Expenditure for each vehicle using pie chart
         exp_data=yearly_data.groupby('Vehicle_Type')['Advertising_Expenditure'].sum().reset_index()
         Y_chart4 = dcc.Graph(figure=px.pie(exp_data, 
                         values='Advertising_Expenditure', 
