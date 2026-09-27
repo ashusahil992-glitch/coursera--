@@ -127,13 +127,13 @@ def update_output_container(selected_statistics, input_year):
             figure=px.line(yas, x='Year', y='Automobile_Sales', title='Average Annual Automobile Sales')
         )
 
-        monthly_sales = data.groupby('Month')['Automobile_Sales'].sum().reset_index()
+        monthly_sales = yearly_data.groupby('Month')['Automobile_Sales'].sum().reset_index()
         y_chart2 = dcc.Graph(
             figure=px.line(
                 monthly_sales,
                 x='Month',
                 y='Automobile_Sales',
-                title='Total Monthly Automobile Sales'
+                title=f'Total Monthly Automobile Sales in {input_year}'
             )
         )
 
